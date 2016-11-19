@@ -7,6 +7,23 @@
   <version>1.0-SNAPSHOT</version>
   <name>shiro_1 Maven Webapp</name>
   <url>http://maven.apache.org</url>
+	
+	<!-- 仓库地址 -->
+	 <repositories>
+ 2         <repository>
+ 3             <id>nexus</id>
+ 4             <name>Team Nexus Repository</name>
+ 5             <url>http://localhost:8081/nexus/content/groups/public</url>
+ 6         </repository>
+ 7     </repositories>
+	<!-- 插件地址 -->
+ 8     <pluginRepositories>
+ 9         <pluginRepository>
+10             <id>nexus</id>
+11             <name>Team Nexus Repository</name>
+12             <url>http://localhost:8081/nexus/content/groups/public</url>
+13         </pluginRepository>
+14     </pluginRepositories>
 
   <properties>
         <!-- spring版本号 -->
