@@ -7,17 +7,10 @@
 两种实现方法：  
 ## 一：通过超链接实现下载  ## 
 在HTML网页中，通过超链接链接到要下载的文件的地址
-> <!DOCTYPE html>
-> <html>
-> <head>
-> 	<meta charset="UTF-8">
-> 	<title>下载</title>
-> </head>
-> <body>
-> 	`<a href="./ajaxfileupload_JS_File.rar">下载1</a>`
-> 	`<a href="./original.jpg">下载图片</a>`
-> </body>
-> </html>
+
+ 	`<a href="./ajaxfileupload_JS_File.rar">下载1</a>`
+ 	`<a href="./original.jpg">下载图片</a>`
+
 
 ![](http://i.imgur.com/c2gM25O.png)  
 
@@ -28,7 +21,8 @@
 <font size=4 color="blue" face="黑体">这是因为通过超链接下载文件时，如果浏览器可以识别该文件格式，浏览器就会直接打开。只有浏览器不能识别该文件格式的时候 ，</font>才会实现下载。因此利用第二种方法实现下载功能   
 ##  二：通过Servlet程序实现下载 ##
 通过Servlet下载文件的原理是通过servlet读取目标程序，将资源返回客户端。 
-> `<a href="./ajaxfileupload_JS_File.rar">下载1</a>`
+> `<a href="./ajaxfileupload_JS_File.rar">下载1</a>`  
+
 > `<a href="./original.jpg">下载图片</a>`  
 
     @RequestMapping(value = "download")
