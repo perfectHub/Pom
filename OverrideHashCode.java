@@ -34,8 +34,4 @@ public class OverrideHashCode {
 			return false;
 		return true;
 	}
-	
-	public static void main(String[] args) {
-		System.out.println();
-	}
 }
