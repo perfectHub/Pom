@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<c3p0-config>
+	<default-config>
+		<property name="driverClass">com.mysql.jdbc.Driver</property>
+		<property name="jdbcUrl">jdbc:mysql://192.168.100.3:3306/btsee</property>
+		<property name="user">cloud</property>
+		<property name="password">cloud</property>
+		
+		<property name="initialPoolSize">10</property>
+		<property name="minPoolSize">10</property>
+		<property name="maxPoolSize">100</property>
+		<property name="acquireIncrement">10</property>
+		
+		<property name="maxIdleTime">60</property>
+	</default-config>
+	
+	<named-config name="mysql">
+		<property name="driverClass">com.mysql.jdbc.Driver</property>
+		<property name="jdbcUrl">jdbc:mysql://192.168.100.3:3306/btsee</property>
+		<property name="user">cloud</property>
+		<property name="password">cloud</property>
+	</named-config>
+</c3p0-config>
