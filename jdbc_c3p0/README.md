@@ -1,9 +1,9 @@
-jdbc使用c3p0连接池连接数据库：
-需要使用的的jar包：
-	c3p0-0.9.5-pre8.jar
-	mchange-commons-java-0.2.7.jar
-	mysql-connector-java-5.1.30.jar
-	
+jdbc使用c3p0连接池连接数据库：   
+需要使用的的jar包：   
+	c3p0-0.9.5-pre8.jar   
+	mchange-commons-java-0.2.7.jar   
+	mysql-connector-java-5.1.30.jar   
+	   
 参数说明：
 initialPoolSize: 连接池初始化时创建的连接数,default : 3  
 minPoolSize: 连接池保持的最小连接数,default : 3   
