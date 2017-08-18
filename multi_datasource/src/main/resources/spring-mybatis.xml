@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+		http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context-4.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"
+		>
+	
+	<!-- 引入配置文件 -->
+	<bean class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:jdbc.properties</value> 
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 数据源1 -->
+	<bean id="dataSource1" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+		<!-- 数据源驱动类可不写，Druid默认会自动根据URL识别DriverClass -->
+		<property name="driverClassName" value="${jdbc.driver}"/>
+		
+		<!-- 基本属性 url、user、password -->
+		<property name="url" value="${jdbc.url_1}"/>
+		<property name="username" value="${jdbc.username_1}"/>
+		<property name="password" value="${jdbc.password_1}"/>
+		
+		<!-- 配置初始化大小、最小、最大 -->
+		<property name="initialSize" value="${jdbc.init}"/>
+		<property name="minIdle" value="${jdbc.minIdle}"/>
+		<property name="maxActive" value="${jdbc.maxActive}"/>
+		
+		<!-- 配置获取连接等待超时的时间 -->
+		<property name="maxWait" value="60000" />
+	</bean>
+	
+	<!-- 数据源2 -->
+	<bean id="dataSource2" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+		<!-- 数据源驱动类可不写，Druid默认会自动根据URL识别DriverClass -->
+		<property name="driverClassName" value="${jdbc.driver}"/>
+		
+		<!-- 基本属性 url、user、password -->
+		<property name="url" value="${jdbc.url_2}"/>
+		<property name="username" value="${jdbc.username_2}"/>
+		<property name="password" value="${jdbc.password_2}"/>
+		
+		<!-- 配置初始化大小、最小、最大 -->
+		<property name="initialSize" value="${jdbc.init}"/>
+		<property name="minIdle" value="${jdbc.minIdle}"/>
+		<property name="maxActive" value="${jdbc.maxActive}"/>
+		
+		<!-- 配置获取连接等待超时的时间 -->
+		<property name="maxWait" value="60000" />
+	</bean>
+	
+	<bean id="dataSource" class="com.chen.datasource.DynamicDataSource">
+		<property name="targetDataSources">
+			<map key-type="java.lang.String">
+				<entry key="dataSource1" value-ref="dataSource1" />
+				<entry key="dataSource2" value-ref="dataSource2" />
+			</map>
+		</property>
+		<!-- 这里可以指定默认的数据源 -->
+        <property name="defaultTargetDataSource" ref="dataSource1" />  
+	</bean>
+	
+	<context:component-scan base-package="com.chen">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	
+	<!-- mybatis begin -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="mapperLocations" value="classpath:mapper/*.xml"/>
+		<!-- 配置POJO别名 -->
+		<property name="typeAliasesPackage" value="com.chen.entity"/>
+	</bean>
+	
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+		<property name="basePackage" value="com.chen.dao"/>
+	</bean>
+	
+	<!-- 配置事务 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	<!-- 配置 Annotation 驱动，扫描@Transactional注解的类定义事务  -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
+	<!-- 激活自动代理功能 -->
+	<aop:aspectj-autoproxy proxy-target-class="true"/>
+</beans>
